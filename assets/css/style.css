@@ -78,7 +78,7 @@ h3 { font-size: var(--fs-h3); line-height: 1.15; font-weight: 350; }
   letter-spacing: 0.16em; text-transform: uppercase;
   color: var(--ink-soft);
 }
-.plate::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+.plate::after { content: ""; flex: 1; height: 1px; background: var(--rule); transform: scaleX(var(--draw, 1)); transform-origin: left; }
 
 /* --- Boutons ------------------------------------------------------------ */
 .btn {
@@ -114,7 +114,12 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .brand span { font: 400 0.82rem / 1 var(--sans); color: var(--ink-faint); margin-left: 0.45rem; letter-spacing: 0.02em; }
 .nav { margin-left: auto; }
 .rdv-short { display: none; }
+.nav { position: relative; }
 .nav ul { display: flex; gap: clamp(1.1rem, 2.2vw, 2.2rem); }
+.nav-indicator { position: absolute; left: 0; bottom: -0.15rem; height: 1px; width: 1px; background: var(--zone); transform-origin: left; opacity: 0; display: none; }
+.progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--zone); transform: scaleX(0); transform-origin: left; display: none; }
+.motion .progress { display: block; }
+@media (min-width: 900px) { .motion .nav-indicator { display: block; } }
 .nav a { font-size: 0.95rem; text-decoration: none; color: var(--ink-soft); padding-block: 0.4rem; }
 .nav a:hover { color: var(--ink); text-decoration: underline; }
 .menu { display: none; position: relative; }
@@ -167,7 +172,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .planche h3, .public h3 { margin-top: 1.8rem; }
 
 .facts { border-top: 1px solid var(--rule); padding-top: 0.4rem; display: grid; max-width: 36rem; }
-.facts li { display: grid; grid-template-columns: 12.5rem 1fr; gap: 0.3rem 1.5rem; padding-block: 0.85rem; border-bottom: 1px solid var(--rule); font-size: 1.02rem; line-height: 1.5; }
+.facts li { display: grid; grid-template-columns: 12.5rem 1fr; gap: 0.3rem 1.5rem; padding-block: 0.85rem; font-size: 1.02rem; line-height: 1.5; }
 .facts span { font: 600 0.8rem / 1.5 var(--sans); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint); padding-top: 0.15rem; }
 
 .public-head { display: flex; align-items: center; gap: 1.1rem; }
@@ -224,12 +229,15 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .margin-note { font-size: var(--fs-small); line-height: 1.6; color: var(--ink-soft); border-top: 1px solid var(--rule); padding-top: 1rem; }
 .margin-note strong { color: var(--ink); }
 .margin-list { display: grid; border-top: 1px solid var(--rule); font-size: var(--fs-small); }
-.margin-list > div { display: grid; grid-template-columns: 7.5rem 1fr; gap: 1rem; padding-block: 0.6rem; border-bottom: 1px solid var(--rule); }
+.margin-list > div { display: grid; grid-template-columns: 7.5rem 1fr; gap: 1rem; padding-block: 0.6rem; }
 .margin-list dt { font-variant-numeric: tabular-nums; color: var(--ink-faint); font-weight: 600; }
 
 /* Photos (colonne de marge) */
 .photo { display: grid; gap: 0.7rem; }
-.photo img { display: block; width: 100%; height: auto; background: var(--zone-wash); }
+.photo-frame { position: relative; overflow: hidden; background: var(--zone-wash); }
+.photo img { display: block; width: 100%; height: auto; }
+.waterline { position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--zone); opacity: 0; pointer-events: none; }
+.cap-rule { display: block; height: 1px; background: var(--rule); transform-origin: left; }
 .photo figcaption { font-size: 0.85rem; color: var(--ink-faint); }
 
 /* Timeline « Déroulé d'une séance » */
@@ -245,14 +253,14 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 
 /* Tarifs */
 .prices { border-top: 1px solid var(--ink); max-width: 36rem; }
-.prices > div { display: flex; justify-content: space-between; align-items: baseline; gap: 1.5rem; padding-block: 1.3rem; border-bottom: 1px solid var(--rule); }
+.prices > div { display: flex; justify-content: space-between; align-items: baseline; gap: 1.5rem; padding-block: 1.3rem; }
 .prices dt { font-size: 1.15rem; display: grid; gap: 0.15rem; }
 .prices dt small { font-size: 0.9rem; }
 .prices dd { font: 300 2.4rem / 1 var(--serif); font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 /* Avis */
 .reviews { display: grid; gap: 3rem; margin-top: 3rem !important; }
-.review { display: grid; gap: 0.9rem; padding-left: 1.5rem; border-left: 1px solid var(--zone); }
+.review { display: grid; gap: 0.9rem; padding-left: 1.5rem; background: linear-gradient(var(--zone), var(--zone)) left top / 1px calc(var(--draw, 1) * 100%) no-repeat; }
 .review blockquote p { font: 300 1.35rem / 1.5 var(--serif); }
 .review figcaption { font-size: var(--fs-small); color: var(--ink-faint); }
 
@@ -263,11 +271,17 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .info p { font-size: 1.02rem; }
 .hours { border-collapse: collapse; width: 100%; font-size: 1rem; font-variant-numeric: tabular-nums; }
 .hours th { text-align: left; font-weight: 400; color: var(--ink-soft); padding-block: 0.2rem; }
+.hours tr.is-today th, .hours tr.is-today td { color: var(--ink); font-weight: 600; }
+.hours tr.is-today th::before { content: ""; display: inline-block; width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--zone); margin: 0 0.5rem 0.1rem -0.95rem; vertical-align: middle; }
+.open-status { font-size: 0.95rem; line-height: 1.5; color: var(--ink); }
+.open-status::before { content: ""; display: inline-block; width: 0.55rem; height: 0.55rem; border-radius: 50%; border: 1px solid var(--zone); background: var(--zone-fill); margin-right: 0.55rem; vertical-align: 0.05em; }
+.open-status.is-open::before { background: var(--zone); }
+.open-status small { margin-left: 0.2rem; }
 .hours td { text-align: right; padding-block: 0.2rem; }
 
 /* FAQ */
 .faq { border-top: 1px solid var(--rule); margin-top: 2.4rem !important; max-width: 36rem; }
-.faq-item { border-bottom: 1px solid var(--rule); }
+.faq-item { }
 .faq-item summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 1.5rem; padding-block: 1.3rem; font: 350 1.3rem / 1.35 var(--serif); }
 .faq-item summary::-webkit-details-marker { display: none; }
 .faq-item summary::after { content: "+"; font: 300 1.5rem / 1 var(--sans); color: var(--zone); flex: none; transition: transform 0.6s cubic-bezier(0.37, 0, 0.63, 1); }
@@ -280,7 +294,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .demo-note { font-size: var(--fs-small); color: var(--ink-soft); background: var(--zone-wash); border: 1px solid var(--rule); padding: 0.8rem 1rem; max-width: 36rem; }
 .demo-note:target { border-color: var(--zone); }
 .contact { display: grid; border-top: 1px solid var(--rule); max-width: 36rem; }
-.contact > div { display: grid; grid-template-columns: 6.5rem 1fr; gap: 1rem; padding-block: 0.8rem; border-bottom: 1px solid var(--rule); }
+.contact > div { display: grid; grid-template-columns: 6.5rem 1fr; gap: 1rem; padding-block: 0.8rem; }
 .contact dt { color: var(--ink-faint); font-weight: 600; font-size: var(--fs-small); padding-top: 0.15rem; }
 .contact dd { overflow-wrap: anywhere; }
 
@@ -329,6 +343,11 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   .planche:last-child, .public:last-child { min-height: 60vh; }
   .col-margin { padding-top: 2.4rem; max-width: 22rem; }
   .pages .col-margin { border-left: 1px solid var(--rule); padding-left: clamp(1.5rem, 3vw, 3rem); }
+}
+
+/* Filets de tableau tracés (variable --draw animée par GSAP, 1 au repos) */
+.facts li, .margin-list > div, .prices > div, .contact > div, .faq-item {
+  background: linear-gradient(var(--rule), var(--rule)) left bottom / calc(var(--draw, 1) * 100%) 1px no-repeat;
 }
 
 /* --- Animations (GSAP) ----------------------------------------------------

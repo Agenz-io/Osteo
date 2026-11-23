@@ -41,7 +41,8 @@
     function prepStroke(el) {
       var len = el.getTotalLength ? el.getTotalLength() : 0;
       // trait de longueur len, espace plus long : aucun résidu visible au repos
-      gsap.set(el, { strokeDasharray: len + ' ' + (len + 4), strokeDashoffset: len });
+      // +2 : les extrémités arrondies ne laissent aucun point visible au repos
+      gsap.set(el, { strokeDasharray: len + ' ' + (len + 6), strokeDashoffset: len + 2 });
       el._len = len;
     }
     $$('.z-leader', schema).forEach(prepStroke);
@@ -196,6 +197,160 @@
   }
 
   /* ---------------------------------------------------------------------
+     Pack A « Atlas tracé » : mouvements d'accompagnement (pas de mécanique
+     majeure). Tout se joue une seule fois, à l'arrivée de l'élément, et part
+     d'un état déjà presque lisible (opacité 0,2).
+     --------------------------------------------------------------------- */
+  var ONCE = function (trigger, start) { return { trigger: trigger, start: start || 'top 85%', once: true }; };
+
+  // Mesure un trait SVG et le masque pour pouvoir le tracer.
+  function hideStroke(el) {
+    var len = el.getTotalLength ? el.getTotalLength() : 0;
+    el._len = len;
+    gsap.set(el, { strokeDasharray: len + ' ' + (len + 6), strokeDashoffset: len + 2 });
+  }
+
+  /* Ouverture des sections : filet de l'en-tête tracé, titre puis texte. */
+  function sections(full) {
+    var lift = full ? 12 : 0;   // mobile : fondu seul
+    var units = $$('.intro, .planche, .public, .pages .col-text, #motifs > .section-title, #publics > .section-title');
+    units.forEach(function (u) {
+      var group = u.matches('.section-title') ? [u].concat(u.nextElementSibling && u.nextElementSibling.matches('.section-lede') ? [u.nextElementSibling] : []) : null;
+      var plates = group ? [] : $$('.plate', u);
+      var heads = group ? [u] : $$(':scope > h2, :scope > h3', u);
+      var paras = group ? group.slice(1) : $$(':scope > p:not(.plate)', u);
+      var tl = gsap.timeline({ defaults: { ease: EASE }, scrollTrigger: ONCE(u) });
+      if (plates.length) tl.fromTo(plates, { '--draw': 0 }, { '--draw': 1, duration: 1.3 }, 0);
+      if (heads.length) tl.fromTo(heads, { opacity: 0.2, y: lift }, { opacity: 1, y: 0, duration: 1 }, 0.15);
+      if (paras.length) tl.fromTo(paras, { opacity: 0.2, y: lift ? 8 : 0 }, { opacity: 1, y: 0, duration: 0.9, stagger: 0.1 }, 0.3);
+    });
+    return function () {};
+  }
+
+  /* Tableaux et listes : les filets se tracent ligne par ligne. */
+  function ruled() {
+    [['.facts', 'li'], ['.margin-list', ':scope > div'], ['.prices', ':scope > div'],
+     ['.contact', ':scope > div'], ['.faq', '.faq-item']].forEach(function (pair) {
+      $$(pair[0]).forEach(function (g) {
+        var rows = $$(pair[1], g);
+        if (!rows.length) return;
+        gsap.fromTo(rows, { '--draw': 0 }, {
+          '--draw': 1, duration: 1, ease: EASE, stagger: 0.12, scrollTrigger: ONCE(g, 'top 88%')
+        });
+      });
+    });
+
+    // Avis : le trait bleu se dessine de haut en bas, puis la citation.
+    $$('.review').forEach(function (r) {
+      var tl = gsap.timeline({ defaults: { ease: EASE }, scrollTrigger: ONCE(r) });
+      tl.fromTo(r, { '--draw': 0 }, { '--draw': 1, duration: 1.2 }, 0)
+        .fromTo($$('blockquote', r), { opacity: 0.2 }, { opacity: 1, duration: 1 }, 0.3)
+        .fromTo($$('figcaption', r), { opacity: 0.2 }, { opacity: 1, duration: 0.8 }, 0.6);
+    });
+    return function () {};
+  }
+
+  /* Pictos des publics : tracés trait par trait, comme la silhouette. */
+  function pictos() {
+    $$('.picto').forEach(function (svg) {
+      var strokes = $$('path, circle, rect', svg);
+      strokes.forEach(hideStroke);
+      gsap.to(strokes, {
+        strokeDashoffset: 0, duration: 1.4, ease: EASE, stagger: 0.1, scrollTrigger: ONCE(svg, 'top 90%')
+      });
+    });
+    return function () {};
+  }
+
+  /* Photos : la ligne d'eau. Desktop : l'image se découvre de haut en bas
+     derrière une ligne bleue (masque, aucune mise à l'échelle) ; le bassin
+     glisse de 3 % dans son cadre. Mobile : simple fondu. */
+  function photos(full) {
+    $$('.photo').forEach(function (fig) {
+      var frame = $('.photo-frame', fig);
+      var img = $('img', fig);
+      var line = $('.waterline', fig);
+      var rule = $('.cap-rule', fig);
+      var cap = $('figcaption', fig);
+      var tl = gsap.timeline({ defaults: { ease: EASE }, scrollTrigger: ONCE(fig, 'top 82%') });
+      if (full) {
+        tl.fromTo(img, { clipPath: 'inset(0% 0% 100% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.6 }, 0)
+          .fromTo(line, { top: '0%', opacity: 1 }, { top: '100%', duration: 1.6 }, 0)
+          .to(line, { opacity: 0, duration: 0.5 }, 1.35);
+        if (frame && frame.hasAttribute('data-drift')) {
+          tl.fromTo(img, { yPercent: -3 }, { yPercent: 0, duration: 1.9, ease: EASE_OUT }, 0);
+        }
+      } else {
+        tl.fromTo(img, { opacity: 0 }, { opacity: 1, duration: 1.2 }, 0);
+      }
+      tl.fromTo(rule, { scaleX: 0 }, { scaleX: 1, duration: 1 }, full ? 1 : 0.4)
+        .fromTo(cap, { opacity: 0.2 }, { opacity: 1, duration: 0.8 }, full ? 1.3 : 0.7);
+    });
+    return function () {};
+  }
+
+  /* Barre de progression sous l'en-tête : l'échelle de la carte. */
+  function progress() {
+    var bar = $('.progress');
+    if (bar) {
+      gsap.fromTo(bar, { scaleX: 0 }, {
+        scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.4 }
+      });
+    }
+    return function () {};
+  }
+
+  /* Navigation : un soulignement glisse vers la section en cours (desktop). */
+  function navIndicator() {
+    var nav = $('.nav');
+    var ind = $('.nav-indicator');
+    if (!nav || !ind) return function () {};
+    var links = $$('.nav a');
+    var active = [];
+    var current = null;
+
+    function place(link, instant) {
+      if (!link) {
+        gsap.to(ind, { opacity: 0, duration: instant ? 0 : 0.5, ease: EASE, overwrite: 'auto' });
+        return;
+      }
+      var n = nav.getBoundingClientRect();
+      var r = link.getBoundingClientRect();
+      gsap.to(ind, {
+        x: r.left - n.left, width: r.width, opacity: 1,
+        duration: instant ? 0 : 0.8, ease: EASE, overwrite: 'auto'
+      });
+    }
+    function update() {
+      var link = active.length ? active[active.length - 1] : null;
+      if (link === current) return;
+      links.forEach(function (l) { l.removeAttribute('aria-current'); });
+      if (link) link.setAttribute('aria-current', 'true');
+      current = link;
+      place(link);
+    }
+    links.forEach(function (link) {
+      var section = link.hash && document.querySelector(link.hash);
+      if (!section) return;
+      ScrollTrigger.create({
+        trigger: section, start: 'top 45%', end: 'bottom 45%',
+        onToggle: function (self) {
+          var i = active.indexOf(link);
+          if (self.isActive && i < 0) active.push(link);
+          if (!self.isActive && i > -1) active.splice(i, 1);
+          update();
+        }
+      });
+    });
+    function onRefresh() { if (current) place(current, true); }
+    ScrollTrigger.addEventListener('refresh', onRefresh);
+    return function () {
+      ScrollTrigger.removeEventListener('refresh', onRefresh);
+      links.forEach(function (l) { l.removeAttribute('aria-current'); });
+    };
+  }
+
+  /* ---------------------------------------------------------------------
      Répartition selon l'écran et les préférences
      --------------------------------------------------------------------- */
   var mm = gsap.matchMedia();
@@ -205,8 +360,8 @@
   }, function (ctx) {
     var c = ctx.conditions;
     root.classList.add('motion');
-    var cleanups = [hero(), timeline(c.desktop)];
-    if (c.desktop) cleanups.push(atlas());
+    var cleanups = [hero(), timeline(c.desktop), sections(c.desktop), ruled(), pictos(), photos(c.desktop), progress()];
+    if (c.desktop) cleanups.push(atlas(), navIndicator());
     if (c.mobile) cleanups.push(minis());
     return function () {
       cleanups.forEach(function (fn) { fn(); });

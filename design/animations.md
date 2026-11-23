@@ -38,13 +38,29 @@ Pour le tracé de chemins SVG, l'index n'offre rien. Ces gestes sont propres au 
 | Le trait d'annotation se dessine | À chaque changement de zone | Forme de la zone (1,1 s), puis trait d'annotation tracé (0,9 s), puis repère (0,6 s), puis libellé (idée 2) |
 | Le filet de la légende se trace | Hero, au chargement | Filet de la légende tracé depuis le centre (1,8 s). Le texte du hero, lui, n'est jamais animé |
 
+## Pack A « Atlas tracé » (mouvements d'accompagnement)
+
+Ajouté après la première revue (« le site est un peu creux, rien pour les photos »). Il prolonge le geste du schéma, où tout se trace comme une planche qu'on met au propre. **Ce ne sont pas des mécaniques majeures** : rien n'est épinglé, rien n'est scrubé hormis la barre de progression, aucune image ne grandit, aucun texte n'est révélé mot à mot. Chaque mouvement se joue **une seule fois**, à l'arrivée de l'élément (`start: 'top 85%'`, `once: true`). Le texte part d'une opacité de 0,2 : il est presque lisible avant même de bouger.
+
+| Idée | Source | Où | Détail |
+|---|---|---|---|
+| Le filet d'en-tête se trace | Prolonge l'idée 4 (`features/numbered-triplet` : l'étape portée par son filet) | Chaque « Planche 0X · … », « Tarifs et remboursement », etc. | Filet tracé de gauche à droite (variable CSS `--draw`, 1,3 s) |
+| Titre puis texte, par blocs | Prolonge l'idée 3 (`pricing/toggle` : un simple fondu) | Toutes les sections | Titre : fondu et montée de 12 px (1 s) ; paragraphes : 8 px, décalés de 0,1 s. Mobile : fondu seul |
+| Les tableaux se règlent ligne par ligne | Prolonge l'idée 4 | Listes des motifs, repères de la praticienne, tarifs, contact, FAQ | Chaque filet de ligne se trace (1 s, décalage 0,12 s) ; le texte ne bouge pas |
+| Le trait de l'avis se dessine | Prolonge l'idée 4 | Avis | Trait bleu tracé de haut en bas (1,2 s), puis citation et signature en fondu |
+| Les pictos se tracent | Même geste que la silhouette (idée propre) | Publics | Chaque trait du picto se dessine (1,4 s, décalage 0,1 s) |
+| La ligne d'eau | Idée propre (concept « bassin ») | Les trois photos | Desktop : l'image se découvre de haut en bas derrière une ligne bleu bassin (masque `clip-path`, 1,6 s ; aucune mise à l'échelle). Le bassin glisse de 3 % dans son cadre pendant la révélation. Puis le filet de légende se trace et la légende apparaît en fondu. Mobile : simple fondu |
+| L'échelle de la carte | Idée propre | Sous l'en-tête | Barre de 2 px bleu bassin, proportionnelle à la lecture (`scrub: 0.4`) |
+| Le soulignement suit la section | `nav/marginal` (un repère qui reflète la section lue) | Navigation desktop | Un filet glisse sous le lien de la section en cours (0,8 s) ; `aria-current` mis à jour |
+| Horaires vivants | Fonctionnel, pas une animation | Le cabinet | Ligne du jour marquée d'un point ; « Ouvert maintenant · ferme à… » calculé à l'heure de Paris (`main.js`, actif aussi sans animation) |
+
 ## Desktop, mobile, mouvement réduit
 
 | Contexte | Comportement |
 |---|---|
 | Desktop ≥ 1024 px | Tout ce qui précède |
-| Mobile < 1024 px (version allégée) | Pas de schéma fixe : chaque mini-schéma en tête de motif éclaire sa zone une seule fois (1 s). La timeline garde son trait et ses points, mais le texte des étapes n'est pas atténué. Pas de tracé de silhouette ni d'annotation |
-| `prefers-reduced-motion: reduce` | Aucune animation GSAP (la classe `.motion` n'est pas posée) ; les transitions CSS sont neutralisées. Le schéma bascule instantanément (`main.js`), la timeline est entièrement tracée |
+| Mobile < 1024 px (version allégée) | Pas de schéma fixe : chaque mini-schéma en tête de motif éclaire sa zone une seule fois (1 s). La timeline garde son trait et ses points, mais le texte des étapes n'est pas atténué. Pas de tracé de silhouette ni d'annotation. Pack A : fondus et filets seulement (pas de montée, photos en simple fondu, pas d'indicateur de navigation) |
+| `prefers-reduced-motion: reduce` | Aucune animation GSAP (la classe `.motion` n'est pas posée) ; les transitions CSS sont neutralisées ; pas de barre de progression. Le schéma bascule instantanément (`main.js`), la timeline est entièrement tracée |
 | Sans JavaScript | Schéma en vue d'ensemble, toutes les zones visibles ; tout le contenu est lisible |
 
 `gsap.matchMedia()` gère le passage d'un contexte à l'autre (redimensionnement, changement de préférence) et annule proprement les animations du contexte quitté.

@@ -127,6 +127,7 @@
         <li><a href="#cabinet">Cabinet</a></li>
         <li><a href="#faq">Questions</a></li>
       </ul>
+      <span class="nav-indicator" aria-hidden="true"></span>
     </nav>
     <a class="btn btn-ghost header-rdv" href="#rendez-vous"><span class="rdv-long">Prendre rendez-vous</span><span class="rdv-short">Rendez-vous</span></a>
     <details class="menu">
@@ -143,6 +144,7 @@
       </ul>
     </details>
   </div>
+  <span class="progress" aria-hidden="true"></span>
 </header>
 
 <main id="contenu">
@@ -314,7 +316,11 @@
       </div>
       <aside class="col-margin">
         <figure class="photo">
-          <img src="assets/img/bassin-704.webp" srcset="assets/img/bassin-704.webp 704w, assets/img/bassin.webp 1122w" sizes="(min-width: 1024px) 22rem, (min-width: 640px) 34rem, 100vw" width="1122" height="1402" loading="lazy" decoding="async" alt="Eau calme d’une piscine vide, une ligne d’eau bleue et blanche en diagonale au-dessus du carrelage.">
+          <div class="photo-frame" data-drift>
+  <img src="assets/img/bassin-704.webp" srcset="assets/img/bassin-704.webp 704w, assets/img/bassin.webp 1122w" sizes="(min-width: 1024px) 22rem, (min-width: 640px) 34rem, 100vw" width="1122" height="1402" loading="lazy" decoding="async" alt="Eau calme d’une piscine vide, une ligne d’eau bleue et blanche en diagonale au-dessus du carrelage.">
+            <span class="waterline" aria-hidden="true"></span>
+          </div>
+          <span class="cap-rule" aria-hidden="true"></span>
           <figcaption>Le bassin, point de départ.</figcaption>
         </figure>
         <dl class="margin-list">
@@ -363,7 +369,11 @@
       </div>
       <aside class="col-margin">
         <figure class="photo">
-          <img src="assets/img/salle-704.webp" srcset="assets/img/salle-704.webp 704w, assets/img/salle.webp 1448w" sizes="(min-width: 1024px) 22rem, (min-width: 640px) 34rem, 100vw" width="1448" height="1086" loading="lazy" decoding="async" alt="Salle de soin vide et lumineuse : une table recouverte d’un drap blanc et un tabouret en bois près de la fenêtre.">
+          <div class="photo-frame">
+  <img src="assets/img/salle-704.webp" srcset="assets/img/salle-704.webp 704w, assets/img/salle.webp 1448w" sizes="(min-width: 1024px) 22rem, (min-width: 640px) 34rem, 100vw" width="1448" height="1086" loading="lazy" decoding="async" alt="Salle de soin vide et lumineuse : une table recouverte d’un drap blanc et un tabouret en bois près de la fenêtre.">
+            <span class="waterline" aria-hidden="true"></span>
+          </div>
+          <span class="cap-rule" aria-hidden="true"></span>
           <figcaption>La salle de soin, à la lumière du jour.</figcaption>
         </figure>
         <p class="margin-note">Après une séance, une légère fatigue ou des courbatures pendant 24 à 48 heures sont fréquentes. Buvez de l’eau et évitez l’effort intense le jour même.</p>
@@ -421,16 +431,17 @@
           </div>
           <div class="info">
             <h3>Horaires</h3>
+            <p class="open-status" hidden></p>
             <table class="hours">
               <caption class="sr-only">Horaires d’ouverture</caption>
               <tbody>
-                <tr><th scope="row">Lundi</th><td>8 h 30 – 19 h 30</td></tr>
-                <tr><th scope="row">Mardi</th><td>8 h 30 – 19 h 30</td></tr>
-                <tr><th scope="row">Mercredi</th><td>8 h 30 – 13 h</td></tr>
-                <tr><th scope="row">Jeudi</th><td>8 h 30 – 19 h 30</td></tr>
-                <tr><th scope="row">Vendredi</th><td>8 h 30 – 19 h 30</td></tr>
-                <tr><th scope="row">Samedi</th><td>9 h – 12 h 30</td></tr>
-                <tr><th scope="row">Dimanche</th><td>fermé</td></tr>
+                <tr data-day="1" data-open="08:30" data-close="19:30"><th scope="row">Lundi</th><td>8 h 30 – 19 h 30</td></tr>
+                <tr data-day="2" data-open="08:30" data-close="19:30"><th scope="row">Mardi</th><td>8 h 30 – 19 h 30</td></tr>
+                <tr data-day="3" data-open="08:30" data-close="13:00"><th scope="row">Mercredi</th><td>8 h 30 – 13 h</td></tr>
+                <tr data-day="4" data-open="08:30" data-close="19:30"><th scope="row">Jeudi</th><td>8 h 30 – 19 h 30</td></tr>
+                <tr data-day="5" data-open="08:30" data-close="19:30"><th scope="row">Vendredi</th><td>8 h 30 – 19 h 30</td></tr>
+                <tr data-day="6" data-open="09:00" data-close="12:30"><th scope="row">Samedi</th><td>9 h – 12 h 30</td></tr>
+                <tr data-day="0" data-open="" data-close=""><th scope="row">Dimanche</th><td>fermé</td></tr>
               </tbody>
             </table>
           </div>
@@ -446,7 +457,11 @@
       </div>
       <aside class="col-margin">
         <figure class="photo">
-          <img src="assets/img/entree-704.webp" srcset="assets/img/entree-704.webp 704w, assets/img/entree.webp 1122w" sizes="(min-width: 1024px) 22rem, (min-width: 640px) 34rem, 100vw" width="1122" height="1402" loading="lazy" decoding="async" alt="Entrée du cabinet dans un immeuble en pierre claire : grande porte vitrée au ras du trottoir, sans marche.">
+          <div class="photo-frame">
+  <img src="assets/img/entree-704.webp" srcset="assets/img/entree-704.webp 704w, assets/img/entree.webp 1122w" sizes="(min-width: 1024px) 22rem, (min-width: 640px) 34rem, 100vw" width="1122" height="1402" loading="lazy" decoding="async" alt="Entrée du cabinet dans un immeuble en pierre claire : grande porte vitrée au ras du trottoir, sans marche.">
+            <span class="waterline" aria-hidden="true"></span>
+          </div>
+          <span class="cap-rule" aria-hidden="true"></span>
           <figcaption>L’entrée, de plain-pied, sans marche.</figcaption>
         </figure>
       </aside>
