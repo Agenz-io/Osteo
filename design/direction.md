@@ -49,3 +49,15 @@ Les nuances (texte secondaire, filets, voile des zones) sont des mélanges de ce
 9. Le cabinet (adresse, horaires, accès, accessibilité)
 10. FAQ
 11. Rendez-vous et contact
+
+## Refonte « reco » (v2)
+
+Après revue (« le site est plat, va plus loin »), deux pistes ont été maquettées (Planche grand format, Relief). La combinaison retenue :
+
+- **Feuille d'atlas** (piste 1) : papier quadrillé de points (pas de 24 px), règles graduées A–D et repères de coupe autour du hero, titre de feuille « Planche I », coordonnées de Nantes (47°13′ N · 1°33′ O) dans la légende.
+- **Courbes de niveau sur le schéma** (piste 2) : chaque zone est un jeu de quatre courbes de niveau ; toutes les zones restent visibles en relief discret ; le schéma est posé dans un cadre de carte (papier quadrillé, filet, « Vue de face · vue de dos », « Échelle 1:10 »).
+- **Échelle** (inspirée de Steep, Refero Styles) : titres de section à 40–86 px, numéros de planche géants en contour bleu bassin (00 à 06), prix en chiffres de 96–184 px.
+- **Bandes bleu de Prusse** (confirmées par Mercury, Refero Styles) : « Déroulé d'une séance » et « Rendez-vous + pied de page ». Sur ces bandes, le bleu bassin éclairci est la seule couleur vive.
+- **Une forme par section** : praticienne (photo grand format + années), séance (timeline + photo), tarifs (deux grands prix + carte voilée), avis (une citation en grand, deux en dessous), cabinet (photo + infos en grille), FAQ (titre à gauche, questions à droite), rendez-vous (silhouette en vue d'ensemble).
+
+Références Refero Styles consultées (https://styles.refero.design) : fiches Steep, Mercury, OpenAI. Seules leurs idées de composition sont reprises.

@@ -61,7 +61,8 @@
       gsap.killTweensOf([z].concat(shapes, leaders, pins, texts));
       gsap.set(z, { autoAlpha: 1 });
       var tl = gsap.timeline({ delay: delay || 0, defaults: { ease: EASE } });
-      tl.fromTo(shapes, { opacity: 0 }, { opacity: 1, duration: 1.1 }, 0)
+      // courbes de niveau : du centre vers l'extérieur, comme une onde
+      tl.fromTo(shapes, { opacity: 0 }, { opacity: 1, duration: 0.9, stagger: { each: 0.07, from: 'end' } }, 0)
         .fromTo(leaders, { strokeDashoffset: function (i, el) { return el._len; } },
           { strokeDashoffset: 0, duration: 0.9 }, 0.25)
         .fromTo(pins, { opacity: 0, scale: 0.4, transformOrigin: '50% 50%' },
@@ -181,7 +182,7 @@
         defaults: { ease: EASE },
         scrollTrigger: { trigger: step, start: 'top 66%', toggleActions: 'play none none reverse' }
       });
-      tl.fromTo(dot, { borderColor: 'rgba(27, 58, 85, 0.3)' }, { borderColor: 'rgba(27, 58, 85, 1)', duration: 0.6 }, 0)
+      tl.fromTo(dot, { borderColor: 'rgba(246, 248, 249, 0.3)' }, { borderColor: 'rgba(246, 248, 249, 1)', duration: 0.6 }, 0)
         .fromTo(fill, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.8, ease: EASE_OUT }, 0.1);
       // Desktop : l'étape à venir reste lisible mais en retrait (jamais masquée).
       if (full) tl.fromTo(body, { opacity: 0.45 }, { opacity: 1, duration: 0.9, stagger: 0.06 }, 0);
@@ -193,6 +194,11 @@
   function hero() {
     var rule = $('.legend-rule');
     if (rule) gsap.fromTo(rule, { scaleX: 0 }, { scaleX: 1, duration: 1.8, ease: EASE, delay: 0.4 });
+    // la feuille d'atlas se met en place : règles tracées de haut en bas, repères de coupe en fondu
+    var rulers = $$('.sheet .ruler');
+    if (rulers.length) gsap.fromTo(rulers, { scaleY: 0 }, { scaleY: 1, duration: 2, ease: EASE, delay: 0.2 });
+    var crops = $$('.sheet .crop, .sheet-title');
+    if (crops.length) gsap.fromTo(crops, { opacity: 0 }, { opacity: 1, duration: 1.4, ease: EASE, delay: 0.9, stagger: 0.08 });
     return function () {};
   }
 
@@ -213,14 +219,17 @@
   /* Ouverture des sections : filet de l'en-tête tracé, titre puis texte. */
   function sections(full) {
     var lift = full ? 12 : 0;   // mobile : fondu seul
-    var units = $$('.intro, .planche, .public, .pages .col-text, #motifs > .section-title, #publics > .section-title');
+    var units = $$('.intro, .planche, .public, .sec-head, .split-text, .rdv-text, #motifs > .section-title, #publics > .section-title');
     units.forEach(function (u) {
       var group = u.matches('.section-title') ? [u].concat(u.nextElementSibling && u.nextElementSibling.matches('.section-lede') ? [u.nextElementSibling] : []) : null;
       var plates = group ? [] : $$('.plate', u);
+      var nums = group ? [] : $$(':scope > .plate-num', u);
       var heads = group ? [u] : $$(':scope > h2, :scope > h3', u);
       var paras = group ? group.slice(1) : $$(':scope > p:not(.plate)', u);
       var tl = gsap.timeline({ defaults: { ease: EASE }, scrollTrigger: ONCE(u) });
-      if (plates.length) tl.fromTo(plates, { '--draw': 0 }, { '--draw': 1, duration: 1.3 }, 0);
+      // numéro de planche géant : simple fondu avec une légère montée (décoratif)
+      if (nums.length) tl.fromTo(nums, { opacity: 0, y: lift * 1.5 }, { opacity: 1, y: 0, duration: 1.4 }, 0);
+      if (plates.length) tl.fromTo(plates, { '--draw': 0 }, { '--draw': 1, duration: 1.3 }, nums.length ? 0.3 : 0);
       if (heads.length) tl.fromTo(heads, { opacity: 0.2, y: lift }, { opacity: 1, y: 0, duration: 1 }, 0.15);
       if (paras.length) tl.fromTo(paras, { opacity: 0.2, y: lift ? 8 : 0 }, { opacity: 1, y: 0, duration: 0.9, stagger: 0.1 }, 0.3);
     });
@@ -229,8 +238,7 @@
 
   /* Tableaux et listes : les filets se tracent ligne par ligne. */
   function ruled() {
-    [['.facts', 'li'], ['.margin-list', ':scope > div'], ['.prices', ':scope > div'],
-     ['.contact', ':scope > div'], ['.faq', '.faq-item']].forEach(function (pair) {
+    [['.facts', 'li'], ['.contact', ':scope > div'], ['.faq', '.faq-item']].forEach(function (pair) {
       $$(pair[0]).forEach(function (g) {
         var rows = $$(pair[1], g);
         if (!rows.length) return;
@@ -239,6 +247,19 @@
         });
       });
     });
+
+    // Tarifs : les grands chiffres montent doucement, l'un après l'autre.
+    var prices = $$('.price dd');
+    if (prices.length) {
+      gsap.fromTo(prices, { opacity: 0.2, y: 16 }, {
+        opacity: 1, y: 0, duration: 1.2, ease: EASE, stagger: 0.18, scrollTrigger: ONCE('.prices')
+      });
+    }
+    // Parcours de la praticienne : les années apparaissent en suivant.
+    var years = $$('.years > div');
+    if (years.length) {
+      gsap.fromTo(years, { opacity: 0.2 }, { opacity: 1, duration: 0.9, ease: EASE, stagger: 0.12, scrollTrigger: ONCE('.years', 'top 90%') });
+    }
 
     // Avis : le trait bleu se dessine de haut en bas, puis la citation.
     $$('.review').forEach(function (r) {

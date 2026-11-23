@@ -54,6 +54,17 @@ Ajouté après la première revue (« le site est un peu creux, rien pour les ph
 | Le soulignement suit la section | `nav/marginal` (un repère qui reflète la section lue) | Navigation desktop | Un filet glisse sous le lien de la section en cours (0,8 s) ; `aria-current` mis à jour |
 | Horaires vivants | Fonctionnel, pas une animation | Le cabinet | Ligne du jour marquée d'un point ; « Ouvert maintenant · ferme à… » calculé à l'heure de Paris (`main.js`, actif aussi sans animation) |
 
+## Ajustements de la refonte (v2)
+
+| Idée | Où | Détail |
+|---|---|---|
+| Les courbes de niveau s'allument du centre vers l'extérieur | Zones du schéma | Même déclencheur que l'idée 1 ; les quatre courbes apparaissent de l'intérieur vers l'extérieur (0,9 s chacune, décalage 0,07 s), comme une onde. Le relief discret de toutes les zones reste fixe |
+| La feuille se met en place | Hero, au chargement | Les règles graduées se tracent de haut en bas (2 s), les repères de coupe et le titre de feuille apparaissent en fondu ; le texte du hero n'est jamais animé |
+| Numéros de planche géants | Atlas | Fondu avec une montée de 18 px (1,4 s), avant le filet de l'en-tête |
+| Les prix montent | Tarifs | 60 € puis 50 € : fondu depuis 20 % et montée de 16 px (1,2 s, décalage 0,18 s) |
+| Les années suivent | Praticienne | Fondu des quatre années (0,9 s, décalage 0,12 s) |
+| Timeline sur fond encre | Bande « Déroulé d'une séance » | Mécanique inchangée ; couleurs passées en clair sur la bande |
+
 ## Desktop, mobile, mouvement réduit
 
 | Contexte | Comportement |

@@ -125,12 +125,26 @@ def typeset(html):
     return "".join(out)
 
 
+def ruler(side, n=16):
+    """Règle graduée de la feuille d'atlas (hero) : un trait tous les 1/n, lettre tous les 4."""
+    marks = []
+    for i in range(n + 1):
+        y = i * 100 / n
+        big = i % 4 == 0
+        marks.append(f'<span class="tk{" big" if big else ""}" style="top:{y:.2f}%"></span>')
+        if side == "left" and big and i < n:
+            marks.append(f'<em class="tl" style="top:{y + 200 / n:.2f}%">{chr(65 + i // 4)}</em>')
+    return f'<div class="ruler {side}">' + "".join(marks) + "</div>"
+
+
 def render():
     src = (ROOT / "src/index.html").read_text(encoding="utf-8")
     src = typeset(src)  # avant l'injection : les SVG et le JSON-LD restent intacts
     src = src.replace("{{SPRITE}}", body.sprite())
     src = src.replace("{{SCHEMA}}", body.schema())
     src = src.replace("{{MINI_BABY}}", body.mini([], baby=True))
+    src = src.replace("{{OVERVIEW}}", body.overview())
+    src = re.sub(r"\{\{RULER:(left|right)\}\}", lambda m: ruler(m.group(1)), src)
     src = re.sub(r"\{\{MINI:([\w,]+)\}\}", lambda m: body.mini(m.group(1).split(",")), src)
     src = re.sub(r"\{\{PICTO:(\w+)\}\}", lambda m: body.picto(m.group(1)), src)
     src = src.replace("{{FAQ_HTML}}", typeset(faq_html()))

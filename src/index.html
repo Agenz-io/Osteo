@@ -97,7 +97,12 @@
 <main id="contenu">
 
   <!-- HERO : une colonne étroite, centrée -->
-  <section class="hero" id="accueil" aria-labelledby="titre">
+  <section class="hero sheet" id="accueil" aria-labelledby="titre">
+    <div class="sheet-frame" aria-hidden="true">
+      <span class="crop tl"></span><span class="crop tr"></span><span class="crop bl"></span><span class="crop br"></span>
+      {{RULER:left}}{{RULER:right}}
+    </div>
+    <p class="sheet-title" aria-hidden="true">Planche I · Le corps comme une carte</p>
     <div class="hero-col">
       <h1 id="titre">
         <span class="kicker">Camille Roux, ostéopathe D.O. à Nantes · depuis 2016</span>
@@ -115,6 +120,7 @@
         <div><dt><span class="legend-key" aria-hidden="true"></span>Légende</dt><dd>zone décrite</dd></div>
         <div><dt>Parcours</dt><dd>six zones · quatre publics · une séance en quatre temps</dd></div>
         <div><dt>Séance</dt><dd>environ 1 h · 60 €</dd></div>
+        <div><dt>Repère</dt><dd>47°13′ N · 1°33′ O · Nantes</dd></div>
       </dl>
     </div>
   </section>
@@ -124,6 +130,7 @@
     <div class="col-text">
 
       <section class="block intro" id="lire" data-zones="all" aria-labelledby="t-lire">
+        <span class="plate-num" aria-hidden="true">00</span>
         <p class="plate">Planche 00 · Lire la carte</p>
         <h2 id="t-lire">Une carte, pas un diagnostic</h2>
         <p>Les zones qui suivent sont celles pour lesquelles on me consulte le plus souvent. Pour chacune, vous trouverez ce que vous pouvez ressentir, ce que nous regardons pendant la séance, et les signes qui doivent vous faire consulter d’abord votre médecin.</p>
@@ -136,6 +143,7 @@
 
         <article class="planche" id="machoire" data-zones="machoire" aria-labelledby="t-machoire">
           <figure class="mini-fig">{{MINI:machoire}}</figure>
+          <span class="plate-num" aria-hidden="true">01</span>
           <p class="plate">Planche 01 · Mâchoire</p>
           <h3 id="t-machoire">La mâchoire qui serre</h3>
           <p>Mâchoires serrées au réveil, petits craquements en ouvrant la bouche, tensions qui remontent vers les tempes. Le stress et les nuits courtes y laissent souvent leur trace.</p>
@@ -148,6 +156,7 @@
 
         <article class="planche" id="nuque" data-zones="nuque" aria-labelledby="t-nuque">
           <figure class="mini-fig">{{MINI:nuque}}</figure>
+          <span class="plate-num" aria-hidden="true">02</span>
           <p class="plate">Planche 02 · Nuque</p>
           <h3 id="t-nuque">La nuque après les écrans</h3>
           <p>Raideur en fin de journée, difficulté à tourner la tête, maux de tête qui partent de la base du crâne. La nuque porte la tête toute la journée, devant un écran ou au volant.</p>
@@ -160,6 +169,7 @@
 
         <article class="planche" id="epaules" data-zones="epaules" aria-labelledby="t-epaules">
           <figure class="mini-fig">{{MINI:epaules}}</figure>
+          <span class="plate-num" aria-hidden="true">03</span>
           <p class="plate">Planche 03 · Épaules</p>
           <h3 id="t-epaules">Quand l’épaule se fait sentir</h3>
           <p>Raideur au réveil, gêne pour lever le bras, épaule sollicitée par la natation, le tennis ou le port d’un enfant. Nous regardons l’épaule, mais aussi la nuque, les côtes et la manière dont vous bougez.</p>
@@ -172,6 +182,7 @@
 
         <article class="planche" id="dos" data-zones="dos" aria-labelledby="t-dos">
           <figure class="mini-fig">{{MINI:dos}}</figure>
+          <span class="plate-num" aria-hidden="true">04</span>
           <p class="plate">Planche 04 · Dos</p>
           <h3 id="t-dos">Le dos, du haut jusqu’aux reins</h3>
           <p>Le motif le plus fréquent. Un dos qui se bloque en se baissant, des lombaires qui tirent après une journée assise, une raideur entre les omoplates. Souvent, l’origine n’est pas exactement là où ça fait mal.</p>
@@ -184,6 +195,7 @@
 
         <article class="planche" id="ventre" data-zones="ventre" aria-labelledby="t-ventre">
           <figure class="mini-fig">{{MINI:ventre}}</figure>
+          <span class="plate-num" aria-hidden="true">05</span>
           <p class="plate">Planche 05 · Ventre</p>
           <h3 id="t-ventre">Le ventre et la respiration</h3>
           <p>Sensation de ventre tendu, souffle court, inconfort après une cicatrice ou une période de stress. Le diaphragme relie la respiration, le dos et le ventre : nous travaillons sur cette mobilité, sans prétendre traiter une maladie digestive.</p>
@@ -196,6 +208,7 @@
 
         <article class="planche" id="bassin" data-zones="bassin" aria-labelledby="t-bassin">
           <figure class="mini-fig">{{MINI:bassin}}</figure>
+          <span class="plate-num" aria-hidden="true">06</span>
           <p class="plate">Planche 06 · Bassin</p>
           <h3 id="t-bassin">Le bassin, point d’appui</h3>
           <p>Douleur au creux des reins ou au niveau des fesses, hanche qui tire en marchant, gêne après un accouchement. Le bassin transmet le poids du corps aux jambes : quand il bouge moins bien, le dos et les hanches compensent.</p>
@@ -230,7 +243,7 @@
           <figure class="mini-fig mini-baby">{{MINI_BABY}}</figure>
           <h3 id="t-nourrissons">Ostéopathe nourrisson à Nantes</h3>
           <p>Bébé qui préfère tourner la tête d’un seul côté, inconfort après une naissance longue, tétée difficile d’un côté : je reçois les nourrissons avec leurs parents, sur une séance plus courte et un toucher très léger.</p>
-          <p class="note"><strong>Avant 6 mois :</strong> certaines manipulations (du crâne, de la face et de la colonne) nécessitent une attestation médicale de non contre-indication, établie par votre médecin ou votre pédiatre. Apportez-la à la première séance.</p>
+          <p class="note wash-card"><strong>Avant 6 mois :</strong> certaines manipulations (du crâne, de la face et de la colonne) nécessitent une attestation médicale de non contre-indication, établie par votre médecin ou votre pédiatre. Apportez-la à la première séance.</p>
         </article>
 
         <article class="public" id="sedentaires" data-zones="nuque epaules dos" aria-labelledby="t-sedentaires">
@@ -244,44 +257,46 @@
 
     <aside class="col-fig" aria-label="Schéma du corps">
       <div class="schema" data-zones="all">
+        <span class="coord c1" aria-hidden="true">Vue de face · vue de dos</span>
+        <span class="coord c2" aria-hidden="true">Échelle 1:10</span>
         {{SCHEMA}}
         <p class="schema-caption" aria-hidden="true"><span class="schema-plate">Planche 00</span> Vue d’ensemble</p>
       </div>
     </aside>
   </div>
 
-  <!-- PAGES : même grille, la colonne de droite porte les notes de marge -->
-  <div class="wrap grid pages">
-
-    <section class="block row" id="praticienne" aria-labelledby="t-praticienne">
-      <div class="col-text">
+  <!-- PRATICIENNE : photo en grand, parcours en années -->
+  <div class="wrap pages">
+    <section class="block split prat" id="praticienne" aria-labelledby="t-praticienne">
+      <figure class="photo photo-lg">
+        <div class="photo-frame" data-drift>
+          <img src="assets/img/bassin-704.webp" srcset="assets/img/bassin-704.webp 704w, assets/img/bassin.webp 1122w" sizes="(min-width: 1024px) 36rem, 100vw" width="1122" height="1402" loading="lazy" decoding="async" alt="Eau calme d’une piscine vide, une ligne d’eau bleue et blanche en diagonale au-dessus du carrelage.">
+          <span class="waterline" aria-hidden="true"></span>
+        </div>
+        <span class="cap-rule" aria-hidden="true"></span>
+        <figcaption>Le bassin, point de départ.</figcaption>
+      </figure>
+      <div class="split-text">
         <p class="plate">La praticienne</p>
         <h2 id="t-praticienne">De l’eau du bassin au cabinet</h2>
         <p>J’ai nagé en compétition pendant dix ans, jusqu’aux championnats de France. En 2010, une blessure à l’épaule m’a arrêtée net. C’est en accompagnement de ma rééducation que j’ai rencontré l’ostéopathie, et une manière de regarder le corps dans son ensemble, pas seulement là où il a mal.</p>
         <p>Je me suis formée pendant cinq ans dans une école agréée, puis je me suis installée à Nantes en 2016. Depuis, je me suis formée à la périnatalité et au suivi des nourrissons.</p>
         <p>Ce que je garde du sport : l’écoute du corps, la patience, et l’idée qu’une séance doit vous rendre plus autonome, pas plus dépendant.</p>
-      </div>
-      <aside class="col-margin">
-        <figure class="photo">
-          <div class="photo-frame" data-drift>
-  <img src="assets/img/bassin-704.webp" srcset="assets/img/bassin-704.webp 704w, assets/img/bassin.webp 1122w" sizes="(min-width: 1024px) 22rem, (min-width: 640px) 34rem, 100vw" width="1122" height="1402" loading="lazy" decoding="async" alt="Eau calme d’une piscine vide, une ligne d’eau bleue et blanche en diagonale au-dessus du carrelage.">
-            <span class="waterline" aria-hidden="true"></span>
-          </div>
-          <span class="cap-rule" aria-hidden="true"></span>
-          <figcaption>Le bassin, point de départ.</figcaption>
-        </figure>
-        <dl class="margin-list">
-          <div><dt>2000 – 2010</dt><dd>Natation en compétition</dd></div>
+        <dl class="years">
+          <div><dt>2000</dt><dd>Natation en compétition</dd></div>
           <div><dt>2010</dt><dd>Blessure à l’épaule</dd></div>
-          <div><dt>2011 – 2016</dt><dd>Formation en ostéopathie, 5 ans</dd></div>
+          <div><dt>2011</dt><dd>Formation en ostéopathie, 5 ans</dd></div>
           <div><dt>2016</dt><dd>Installation à Nantes</dd></div>
-          <div><dt>N° ADELI</dt><dd>fictif, site de démonstration</dd></div>
         </dl>
-      </aside>
+        <p class="fine">N° ADELI : fictif, site de démonstration.</p>
+      </div>
     </section>
+  </div>
 
-    <section class="block row" id="seance" aria-labelledby="t-seance">
-      <div class="col-text">
+  <!-- SÉANCE : bande bleu de Prusse, timeline + photo en grand -->
+  <section class="band" id="seance" aria-labelledby="t-seance">
+    <div class="wrap band-in split seance">
+      <div class="split-text">
         <p class="plate">Déroulé d’une séance</p>
         <h2 id="t-seance">Une heure, en quatre temps</h2>
         <div class="timeline-wrap">
@@ -289,86 +304,100 @@
         <ol class="timeline">
           <li class="step">
             <span class="step-dot" aria-hidden="true"><span class="step-fill"></span></span>
-            <p class="step-time">environ 15 min</p>
+            <p class="step-time"><span class="step-num" aria-hidden="true">01</span>environ 15 min</p>
             <h3>Échange</h3>
             <p>Nous parlons de ce qui vous amène, de votre histoire, de vos antécédents et de vos traitements. Apportez vos examens récents si vous en avez.</p>
           </li>
           <li class="step">
             <span class="step-dot" aria-hidden="true"><span class="step-fill"></span></span>
-            <p class="step-time">environ 10 min</p>
+            <p class="step-time"><span class="step-num" aria-hidden="true">02</span>environ 10 min</p>
             <h3>Tests</h3>
             <p>J’observe votre posture et vos mouvements, puis je teste la mobilité des zones concernées. Si quelque chose relève d’un avis médical, je vous le dis et la séance s’arrête là.</p>
           </li>
           <li class="step">
             <span class="step-dot" aria-hidden="true"><span class="step-fill"></span></span>
-            <p class="step-time">environ 25 min</p>
+            <p class="step-time"><span class="step-num" aria-hidden="true">03</span>environ 25 min</p>
             <h3>Traitement</h3>
             <p>Des techniques manuelles adaptées à vous : douces, articulaires ou tissulaires. Je vous explique ce que je fais et vous pouvez m’arrêter à tout moment.</p>
           </li>
           <li class="step">
             <span class="step-dot" aria-hidden="true"><span class="step-fill"></span></span>
-            <p class="step-time">environ 10 min</p>
+            <p class="step-time"><span class="step-num" aria-hidden="true">04</span>environ 10 min</p>
             <h3>Conseils</h3>
             <p>Deux ou trois gestes simples, des repères pour les jours qui suivent, et si besoin une orientation vers un autre professionnel de santé.</p>
           </li>
         </ol>
         </div>
       </div>
-      <aside class="col-margin">
-        <figure class="photo">
+      <div class="seance-side">
+        <figure class="photo photo-lg">
           <div class="photo-frame">
-  <img src="assets/img/salle-704.webp" srcset="assets/img/salle-704.webp 704w, assets/img/salle.webp 1448w" sizes="(min-width: 1024px) 22rem, (min-width: 640px) 34rem, 100vw" width="1448" height="1086" loading="lazy" decoding="async" alt="Salle de soin vide et lumineuse : une table recouverte d’un drap blanc et un tabouret en bois près de la fenêtre.">
+            <img src="assets/img/salle-704.webp" srcset="assets/img/salle-704.webp 704w, assets/img/salle.webp 1448w" sizes="(min-width: 1024px) 38rem, 100vw" width="1448" height="1086" loading="lazy" decoding="async" alt="Salle de soin vide et lumineuse : une table recouverte d’un drap blanc et un tabouret en bois près de la fenêtre.">
             <span class="waterline" aria-hidden="true"></span>
           </div>
           <span class="cap-rule" aria-hidden="true"></span>
           <figcaption>La salle de soin, à la lumière du jour.</figcaption>
         </figure>
-        <p class="margin-note">Après une séance, une légère fatigue ou des courbatures pendant 24 à 48 heures sont fréquentes. Buvez de l’eau et évitez l’effort intense le jour même.</p>
-      </aside>
-    </section>
+        <p class="side-note">Après une séance, une légère fatigue ou des courbatures pendant 24 à 48 heures sont fréquentes. Buvez de l’eau et évitez l’effort intense le jour même.</p>
+      </div>
+    </div>
+  </section>
 
-    <section class="block row" id="tarifs" aria-labelledby="t-tarifs">
-      <div class="col-text">
+  <div class="wrap pages">
+
+    <!-- TARIFS : les deux prix en très grand, une carte voilée -->
+    <section class="block tarifs" id="tarifs" aria-labelledby="t-tarifs">
+      <header class="sec-head">
         <p class="plate">Tarifs et remboursement</p>
         <h2 id="t-tarifs">Deux tarifs, une facture à chaque séance</h2>
-        <dl class="prices">
-          <div><dt>Séance adulte <small>environ 1 h · sportifs, grossesse, actifs</small></dt><dd>60 €</dd></div>
-          <div><dt>Séance nourrisson <small>environ 45 min · jusqu’à 12 mois</small></dt><dd>50 €</dd></div>
-        </dl>
-        <p>L’ostéopathie n’est pas prise en charge par l’Assurance Maladie. Beaucoup de mutuelles remboursent une partie des séances, selon votre contrat : un nombre de séances par an, un montant par séance, ou un forfait « médecines douces ». Une facture vous est remise à chaque séance pour votre demande de remboursement.</p>
-      </div>
-      <aside class="col-margin">
-        <p class="margin-note"><strong>Règlement</strong><br>Carte bancaire, espèces ou chèque.</p>
-        <p class="margin-note"><strong>Annulation</strong><br>Merci de prévenir au moins 24 heures à l’avance : le créneau pourra profiter à quelqu’un d’autre.</p>
-      </aside>
-    </section>
-
-    <section class="block row" id="avis" aria-labelledby="t-avis">
-      <div class="col-text">
-        <p class="plate">Avis</p>
-        <h2 id="t-avis">Ce qu’en disent les patients</h2>
-        <div class="reviews">
-          <figure class="review">
-            <blockquote><p>Elle prend le temps d’expliquer ce qu’elle fait et pourquoi. Je suis repartie avec deux exercices que je fais encore avant mes sorties longues.</p></blockquote>
-            <figcaption>Léa, 34 ans, coureuse</figcaption>
-          </figure>
-          <figure class="review">
-            <blockquote><p>Consultée au septième mois pour des douleurs dans le bas du dos. Séance très douce, allongée sur le côté. Elle m’a aussi conseillé d’en parler à ma sage-femme.</p></blockquote>
-            <figcaption>Inès, 29 ans, enceinte de son premier enfant</figcaption>
-          </figure>
-          <figure class="review">
-            <blockquote><p>Notre fils tournait toujours la tête du même côté. Elle nous a demandé l’attestation du pédiatre et nous a montré comment varier ses positions.</p></blockquote>
-            <figcaption>Thomas, papa d’un bébé de 4 mois</figcaption>
-          </figure>
+      </header>
+      <dl class="prices">
+        <div class="price"><dt>Séance adulte <small>environ 1 h · sportifs, grossesse, actifs</small></dt><dd>60<span>€</span></dd></div>
+        <div class="price"><dt>Séance nourrisson <small>environ 45 min · jusqu’à 12 mois</small></dt><dd>50<span>€</span></dd></div>
+      </dl>
+      <div class="tarifs-foot">
+        <p class="wash-card">L’ostéopathie n’est pas prise en charge par l’Assurance Maladie. Beaucoup de mutuelles remboursent une partie des séances, selon votre contrat : un nombre de séances par an, un montant par séance, ou un forfait « médecines douces ». Une facture vous est remise à chaque séance pour votre demande de remboursement.</p>
+        <div class="tarifs-notes">
+          <p><strong>Règlement</strong><br>Carte bancaire, espèces ou chèque.</p>
+          <p><strong>Annulation</strong><br>Merci de prévenir au moins 24 heures à l’avance : le créneau pourra profiter à quelqu’un d’autre.</p>
         </div>
       </div>
-      <aside class="col-margin">
-        <p class="margin-note"><strong>Avis fictifs</strong><br>Rédigés pour ce site de démonstration. Ils ne décrivent pas de vrais patients.</p>
-      </aside>
     </section>
 
-    <section class="block row" id="cabinet" aria-labelledby="t-cabinet">
-      <div class="col-text">
+    <!-- AVIS : une citation en grand, deux en dessous -->
+    <section class="block avis" id="avis" aria-labelledby="t-avis">
+      <header class="sec-head">
+        <p class="plate">Avis</p>
+        <h2 id="t-avis">Ce qu’en disent les patients</h2>
+      </header>
+      <div class="reviews">
+        <figure class="review review-lead">
+          <blockquote><p>Elle prend le temps d’expliquer ce qu’elle fait et pourquoi. Je suis repartie avec deux exercices que je fais encore avant mes sorties longues.</p></blockquote>
+          <figcaption>Léa, 34 ans, coureuse</figcaption>
+        </figure>
+        <figure class="review">
+          <blockquote><p>Consultée au septième mois pour des douleurs dans le bas du dos. Séance très douce, allongée sur le côté. Elle m’a aussi conseillé d’en parler à ma sage-femme.</p></blockquote>
+          <figcaption>Inès, 29 ans, enceinte de son premier enfant</figcaption>
+        </figure>
+        <figure class="review">
+          <blockquote><p>Notre fils tournait toujours la tête du même côté. Elle nous a demandé l’attestation du pédiatre et nous a montré comment varier ses positions.</p></blockquote>
+          <figcaption>Thomas, papa d’un bébé de 4 mois</figcaption>
+        </figure>
+      </div>
+      <p class="fine"><strong>Avis fictifs</strong> · rédigés pour ce site de démonstration, ils ne décrivent pas de vrais patients.</p>
+    </section>
+
+    <!-- CABINET : photo de l'entrée en pleine colonne, infos en grille -->
+    <section class="block split cabinet" id="cabinet" aria-labelledby="t-cabinet">
+      <figure class="photo photo-lg">
+        <div class="photo-frame">
+          <img src="assets/img/entree-704.webp" srcset="assets/img/entree-704.webp 704w, assets/img/entree.webp 1122w" sizes="(min-width: 1024px) 36rem, 100vw" width="1122" height="1402" loading="lazy" decoding="async" alt="Entrée du cabinet dans un immeuble en pierre claire : grande porte vitrée au ras du trottoir, sans marche.">
+          <span class="waterline" aria-hidden="true"></span>
+        </div>
+        <span class="cap-rule" aria-hidden="true"></span>
+        <figcaption>L’entrée, de plain-pied, sans marche.</figcaption>
+      </figure>
+      <div class="split-text">
         <p class="plate">Infos pratiques</p>
         <h2 id="t-cabinet">Le cabinet</h2>
         <div class="infos">
@@ -402,61 +431,50 @@
           </div>
         </div>
       </div>
-      <aside class="col-margin">
-        <figure class="photo">
-          <div class="photo-frame">
-  <img src="assets/img/entree-704.webp" srcset="assets/img/entree-704.webp 704w, assets/img/entree.webp 1122w" sizes="(min-width: 1024px) 22rem, (min-width: 640px) 34rem, 100vw" width="1122" height="1402" loading="lazy" decoding="async" alt="Entrée du cabinet dans un immeuble en pierre claire : grande porte vitrée au ras du trottoir, sans marche.">
-            <span class="waterline" aria-hidden="true"></span>
-          </div>
-          <span class="cap-rule" aria-hidden="true"></span>
-          <figcaption>L’entrée, de plain-pied, sans marche.</figcaption>
-        </figure>
-      </aside>
     </section>
 
-    <section class="block row" id="faq" aria-labelledby="t-faq">
-      <div class="col-text">
+    <!-- FAQ : titre à gauche, questions à droite -->
+    <section class="block faq-sec" id="faq" aria-labelledby="t-faq">
+      <header class="sec-head faq-head">
         <p class="plate">Questions fréquentes</p>
         <h2 id="t-faq">Avant de venir</h2>
-        <div class="faq">
+        <p class="side-note">Une autre question ? Posez-la au moment de prendre rendez-vous. Je ne donne pas d’avis médical par téléphone ou par e-mail.</p>
+      </header>
+      <div class="faq">
 {{FAQ_HTML}}
-        </div>
       </div>
-      <aside class="col-margin">
-        <p class="margin-note">Une autre question ? Posez-la au moment de prendre rendez-vous. Je ne donne pas d’avis médical par téléphone ou par e-mail.</p>
-      </aside>
-    </section>
-
-    <section class="block row rdv" id="rendez-vous" aria-labelledby="t-rdv">
-      <div class="col-text">
-        <p class="plate">Rendez-vous et contact</p>
-        <h2 id="t-rdv">Trouver un créneau</h2>
-        <p>Les rendez-vous se prennent en ligne ou par téléphone. Le premier rendez-vous dure environ une heure.</p>
-        <div class="rdv-actions">
-          <a class="btn" href="#rdv-demo" id="rdv-online">Prendre rendez-vous en ligne</a>
-          <p class="tel-line">Par téléphone : <span class="tel">02 00 00 00 00</span> <small>(numéro fictif)</small></p>
-        </div>
-        <p class="demo-note" id="rdv-demo">Site de démonstration : la prise de rendez-vous en ligne et le téléphone ne sont pas connectés.</p>
-        <dl class="contact">
-          <div><dt>E-mail</dt><dd>contact@cabinet-roux.example <small>(fictif)</small></dd></div>
-          <div><dt>Adresse</dt><dd>7 passage des Nageuses, 44000 Nantes <small>(fictive)</small></dd></div>
-        </dl>
-      </div>
-      <aside class="col-margin">
-        <p class="margin-note"><strong>En cas d’urgence</strong><br>Appelez le 15 (SAMU) ou le 112. L’ostéopathie ne se substitue pas à une consultation médicale.</p>
-      </aside>
     </section>
 
   </div>
 </main>
 
-<footer class="site-footer">
-  <div class="wrap footer-in">
+<!-- RENDEZ-VOUS + PIED DE PAGE : bande bleu de Prusse -->
+<div class="band band-end">
+  <section class="wrap band-in rdv" id="rendez-vous" aria-labelledby="t-rdv">
+    <div class="rdv-text">
+      <p class="plate">Rendez-vous et contact</p>
+      <h2 id="t-rdv">Trouver un créneau</h2>
+      <p>Les rendez-vous se prennent en ligne ou par téléphone. Le premier rendez-vous dure environ une heure.</p>
+      <div class="rdv-actions">
+        <a class="btn btn-paper" href="#rdv-demo" id="rdv-online">Prendre rendez-vous en ligne</a>
+        <p class="tel-line">Par téléphone : <span class="tel">02 00 00 00 00</span> <small>(numéro fictif)</small></p>
+      </div>
+      <p class="demo-note" id="rdv-demo">Site de démonstration : la prise de rendez-vous en ligne et le téléphone ne sont pas connectés.</p>
+      <dl class="contact">
+        <div><dt>E-mail</dt><dd>contact@cabinet-roux.example <small>(fictif)</small></dd></div>
+        <div><dt>Adresse</dt><dd>7 passage des Nageuses, 44000 Nantes <small>(fictive)</small></dd></div>
+        <div><dt>Urgence</dt><dd>Appelez le 15 (SAMU) ou le 112. L’ostéopathie ne se substitue pas à une consultation médicale.</dd></div>
+      </dl>
+    </div>
+    <figure class="rdv-fig" aria-hidden="true">{{OVERVIEW}}</figure>
+  </section>
+
+  <footer class="wrap site-footer">
     <p class="footer-demo">Site de démonstration, cabinet fictif.</p>
     <p>Camille Roux, ses coordonnées, son parcours et les avis présentés sont imaginaires. L’ostéopathie ne se substitue pas à une consultation médicale.</p>
     <p class="footer-small">Schémas et pictos dessinés pour ce site · photos d’illustration générées par IA · polices Fraunces et Source Sans 3 (licence SIL OFL) · voir CREDITS.md</p>
-  </div>
-</footer>
+  </footer>
+</div>
 
 <script src="assets/vendor/gsap.min.js" defer></script>
 <script src="assets/vendor/ScrollTrigger.min.js" defer></script>

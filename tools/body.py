@@ -179,9 +179,52 @@ def ellipse(cx, cy, rx, ry, ox, oy=TOP, cls="z-shape"):
     return f'<ellipse class="{cls}" cx="{_f(cx + ox)}" cy="{_f(cy + oy)}" rx="{rx}" ry="{ry}"/>'
 
 
+# --- Courbes de niveau ------------------------------------------------------
+import math
+
+
+def _ring(cx, cy, rx, ry, k, seed, n=28):
+    pts = []
+    for i in range(n):
+        t = 2 * math.pi * i / n
+        w = 1 + k * (0.55 * math.sin(3 * t + seed) + 0.3 * math.sin(5 * t + seed * 1.7) + 0.15 * math.sin(2 * t + seed * 0.6))
+        pts.append((cx + rx * w * math.cos(t), cy + ry * w * math.sin(t)))
+    return catmull_closed(pts)
+
+
+RING_SCALES = (1.0, 0.74, 0.5, 0.27)   # de l'extérieur vers le centre
+
+
+def contour_set(cx, cy, rx, ry, ox, oy=TOP, scales=RING_SCALES, cls="z-shape z-ring", k=0.09):
+    """Courbes de niveau autour d'une zone (même tracé fin que la silhouette)."""
+    seed = (cx * 0.37 + cy * 0.11) % 6.28
+    out = []
+    for i, f in enumerate(scales):
+        c = cls + (" z-ring-out" if i == 0 else "")
+        out.append(f'<path class="{c}" d="{_ring(cx + ox, cy + oy, rx * f, ry * f, k, seed + i * 0.4)}"/>')
+    return "".join(out)
+
+
 def zone_shapes(name):
     views, shapes, *_ = ZONES[name]
-    return "".join(ellipse(*s, ORIGIN[v]) for v in views for s in shapes)
+    return "".join(contour_set(*sh, ORIGIN[v]) for v in views for sh in shapes)
+
+
+def relief():
+    """Relief discret : toutes les zones cartographiées en permanence."""
+    out = []
+    for name, (views, shapes, *_rest) in ZONES.items():
+        for v in views:
+            for sh in shapes:
+                out.append(contour_set(*sh, ORIGIN[v], scales=(0.9, 0.55), cls="relief"))
+    return '<g class="relief-layer" aria-hidden="true">' + "".join(out) + "</g>"
+
+
+BABY_ZONES = [(200, 156, 25, 25), (200, 190, 17, 9)]
+
+
+def baby_shapes():
+    return "".join(contour_set(cx, cy, rx, ry, 0, 0) for cx, cy, rx, ry in BABY_ZONES)
 
 
 def annotation(name):
@@ -210,8 +253,7 @@ def schema():
     )
     baby_zones = (
         '<g class="zone" data-z="bebe">'
-        '<ellipse class="z-shape" cx="200" cy="156" rx="25" ry="25"/>'
-        '<ellipse class="z-shape" cx="200" cy="190" rx="17" ry="9"/>'
+        + baby_shapes() +
         '<g class="z-ann"><path class="z-leader" d="M224 148L268 132"/>'
         '<circle class="z-pin" cx="224" cy="148" r="1.6"/>'
         '<text class="z-label" x="272" y="130">crâne</text>'
@@ -226,6 +268,7 @@ def schema():
         '<svg class="schema-svg" viewBox="0 0 400 470" role="img" aria-labelledby="schema-title">'
         '<title id="schema-title">Schéma du corps, vue de face et vue de dos</title>'
         '<g class="view-adult">'
+        f'{relief()}'
         f'<g class="fig" transform="translate({FRONT_X} {TOP})">{front}</g>'
         f'<g class="fig" transform="translate({BACK_X} {TOP})">{back}</g>'
         f'<text class="v-label" x="{FRONT_X + 60}" y="462" text-anchor="middle">face</text>'
@@ -245,8 +288,7 @@ def mini(names, baby=False):
         return (
             '<svg class="mini" viewBox="140 125 120 170" aria-hidden="true" focusable="false">'
             '<use href="#fig-baby" x="140" y="10" width="120" height="430"/>'
-            '<ellipse class="z-shape" cx="200" cy="156" rx="25" ry="25"/>'
-            '<ellipse class="z-shape" cx="200" cy="190" rx="17" ry="9"/></svg>'
+            + baby_shapes() + '</svg>'
         )
     shapes = "".join(zone_shapes(n) for n in names)
     return (
@@ -254,6 +296,17 @@ def mini(names, baby=False):
         f'<use href="#fig-front" x="{FRONT_X}" y="{TOP}" width="120" height="430"/>'
         f'<use href="#fig-back" x="{BACK_X}" y="{TOP}" width="120" height="430"/>'
         f"{shapes}</svg>"
+    )
+
+
+def overview():
+    """Silhouette face/dos avec toutes les zones en courbes de niveau (pied de page)."""
+    front, back, _ = figure_parts()
+    zones = "".join(zone_shapes(n) for n in ZONES if n != "genoux")
+    return (
+        '<svg class="overview" viewBox="60 0 280 450" aria-hidden="true" focusable="false">'
+        f'<g transform="translate({FRONT_X} {TOP})">{front}</g>'
+        f'<g transform="translate({BACK_X} {TOP})">{back}</g>{zones}</svg>'
     )
 
 
