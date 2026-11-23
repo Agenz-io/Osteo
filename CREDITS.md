@@ -41,7 +41,12 @@ Contraintes communes (en négatif) : *people, hands, faces, logos, brand, readab
 
 ## Bibliothèques
 
-Aucune pour la version sans animation. GSAP et ScrollTrigger seront ajoutés à l'étape des animations (licence à noter ici).
+| Bibliothèque | Fichiers | Source | Licence |
+|---|---|---|---|
+| GSAP 3.13.0 | `assets/vendor/gsap.min.js` | Paquet npm `gsap@3.13.0` (https://www.npmjs.com/package/gsap) | GreenSock « Standard 'no charge' license » (champ `license` du paquet ; termes : https://gsap.com/standard-license). Copyright 2008-2025 GreenSock |
+| ScrollTrigger 3.13.0 | `assets/vendor/ScrollTrigger.min.js` | Même paquet | Même licence |
+
+Les fichiers sont copiés tels quels depuis `dist/` du paquet, en-têtes de licence conservés.
 
 ## Références de design (non incluses dans le site)
 

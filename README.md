@@ -12,7 +12,9 @@ src/index.html      gabarit de la page
 tools/body.py       génère le schéma du corps, les zones et les pictos (SVG)
 tools/build.py      assemble index.html (SVG, FAQ + JSON-LD, typographie française)
 assets/css/         styles (fonts.css : @font-face auto-hébergées)
-assets/js/main.js   bascule des zones du schéma au défilement
+assets/js/main.js   bascule des zones du schéma au défilement, FAQ
+assets/js/animations.js  animations GSAP + ScrollTrigger (voir design/animations.md)
+assets/vendor/      GSAP 3.13.0, ScrollTrigger
 assets/fonts/       Fraunces, Source Sans 3 (SIL OFL)
 design/             direction artistique, animations
 CREDITS.md          sources et licences de chaque visuel

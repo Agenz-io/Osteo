@@ -61,6 +61,36 @@ def catmull_open(pts):
     return "".join(d)
 
 
+def _segments_closed(pts):
+    n = len(pts)
+    segs = []
+    for i in range(n):
+        p0, p1, p2, p3 = pts[i - 1], pts[i], pts[(i + 1) % n], pts[(i + 2) % n]
+        c1 = (p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6)
+        c2 = (p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6)
+        segs.append((p1, c1, c2, p2))
+    return segs
+
+
+def _segs_to_d(segs):
+    d = [f"M{_f(segs[0][0][0])} {_f(segs[0][0][1])}"]
+    for _, c1, c2, p2 in segs:
+        d.append(f"C{_f(c1[0])} {_f(c1[1])} {_f(c2[0])} {_f(c2[1])} {_f(p2[0])} {_f(p2[1])}")
+    return "".join(d)
+
+
+def outline_halves(half=None, cx=CX):
+    """Le même contour en deux moitiés partant du sommet du crâne (pour le tracé animé)."""
+    half = half or HALF
+    right = [(cx + x, y) for x, y in half]
+    left = [(cx - x, y) for x, y in reversed(half[1:-1])]
+    segs = _segments_closed(right + left)
+    k = len(right) - 1                      # segments du sommet jusqu'à l'entrejambe
+    first = segs[:k]
+    second = [(p2, c2, c1, p1) for (p1, c1, c2, p2) in reversed(segs[k:])]
+    return _segs_to_d(first), _segs_to_d(second)
+
+
 def mirror_closed(half, cx=CX):
     right = [(cx + x, y) for x, y in half]
     left = [(cx - x, y) for x, y in reversed(half[1:-1])]
@@ -91,19 +121,35 @@ def path(d, cls):
     return f'<path class="{cls}" d="{d}"/>'
 
 
-def sprite():
-    front = "".join(path(d, "b-detail") for d in CLAVICLES)
-    back = "".join(path(d, "b-detail") for d in SCAPULAE + ILIAC) + path(SPINE, "b-detail b-spine")
+def figure_parts(split=False):
+    """Contenu des trois figures (repère local 120 × 430).
+    split=True : contour en deux moitiés (grand schéma, tracé animé)."""
+    outline = "".join(path(d, "b-line") for d in outline_halves()) if split else path(OUTLINE, "b-line")
+    front = (
+        outline
+        + "".join(path(d, "b-detail") for d in CLAVICLES)
+        + '<circle class="b-detail" cx="60" cy="164" r="0.9"/>'
+    )
+    back = (
+        outline
+        + "".join(path(d, "b-detail") for d in SCAPULAE + ILIAC)
+        + path(SPINE, "b-detail b-spine")
+    )
     baby = (
         '<circle class="b-line" cx="60" cy="146" r="21"/>'
         + path(BABY_BODY, "b-line")
         + "".join(path(d, "b-detail") for d in BABY_FOLDS)
     )
+    return front, back, baby
+
+
+def sprite():
+    """Symboles réutilisés par les mini-schémas (mobile)."""
+    front, back, baby = figure_parts()
     return (
         '<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false"><defs>'
-        f'<symbol id="fig-front" viewBox="0 0 120 430">{path(OUTLINE, "b-line")}{front}'
-        '<circle class="b-detail" cx="60" cy="164" r="0.9"/></symbol>'
-        f'<symbol id="fig-back" viewBox="0 0 120 430">{path(OUTLINE, "b-line")}{back}</symbol>'
+        f'<symbol id="fig-front" viewBox="0 0 120 430">{front}</symbol>'
+        f'<symbol id="fig-back" viewBox="0 0 120 430">{back}</symbol>'
         f'<symbol id="fig-baby" viewBox="0 0 120 430">{baby}</symbol>'
         "</defs></svg>"
     )
@@ -157,7 +203,8 @@ def annotation(name):
 
 
 def schema():
-    """Grand schéma fixe (desktop)."""
+    """Grand schéma fixe (desktop). Figures écrites en ligne pour pouvoir animer leur tracé."""
+    front, back, baby = figure_parts(split=True)
     zones = "".join(
         f'<g class="zone" data-z="{n}">{zone_shapes(n)}{annotation(n)}</g>' for n in ZONES
     )
@@ -179,13 +226,13 @@ def schema():
         '<svg class="schema-svg" viewBox="0 0 400 470" role="img" aria-labelledby="schema-title">'
         '<title id="schema-title">Schéma du corps, vue de face et vue de dos</title>'
         '<g class="view-adult">'
-        f'<use href="#fig-front" x="{FRONT_X}" y="{TOP}" width="120" height="430"/>'
-        f'<use href="#fig-back" x="{BACK_X}" y="{TOP}" width="120" height="430"/>'
+        f'<g class="fig" transform="translate({FRONT_X} {TOP})">{front}</g>'
+        f'<g class="fig" transform="translate({BACK_X} {TOP})">{back}</g>'
         f'<text class="v-label" x="{FRONT_X + 60}" y="462" text-anchor="middle">face</text>'
         f'<text class="v-label" x="{BACK_X + 60}" y="462" text-anchor="middle">dos</text>'
         f"{zones}</g>"
         '<g class="view-baby">'
-        '<use href="#fig-baby" x="140" y="10" width="120" height="430"/>'
+        f'<g class="fig" transform="translate(140 10)">{baby}</g>'
         '<text class="v-label" x="200" y="316" text-anchor="middle">nourrisson, vu de dessus</text>'
         f"{baby_zones}</g>"
         "</svg>"
