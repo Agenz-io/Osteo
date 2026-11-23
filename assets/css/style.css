@@ -218,10 +218,10 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .margin-list > div { display: grid; grid-template-columns: 7.5rem 1fr; gap: 1rem; padding-block: 0.6rem; border-bottom: 1px solid var(--rule); }
 .margin-list dt { font-variant-numeric: tabular-nums; color: var(--ink-faint); font-weight: 600; }
 
-/* Emplacements photo */
-.ph { display: grid; gap: 0.7rem; }
-.ph-box { width: 100%; max-width: 100%; aspect-ratio: var(--ar, 4 / 3); display: grid; place-items: center; text-align: center; padding: 1.5rem; background: var(--zone-wash); border: 1px dashed color-mix(in srgb, var(--ink) 30%, var(--paper)); font-size: 0.82rem; line-height: 1.5; color: var(--ink-faint); letter-spacing: 0.02em; }
-.ph figcaption { font-size: 0.85rem; color: var(--ink-faint); }
+/* Photos (colonne de marge) */
+.photo { display: grid; gap: 0.7rem; }
+.photo img { display: block; width: 100%; height: auto; background: var(--zone-wash); }
+.photo figcaption { font-size: 0.85rem; color: var(--ink-faint); }
 
 /* Timeline « Déroulé d'une séance » */
 .timeline-wrap { position: relative; padding-left: 2.6rem; margin-top: 3rem !important; }

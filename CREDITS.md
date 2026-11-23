@@ -21,19 +21,19 @@ Les fichiers `.woff2` ont été téléchargés depuis Google Fonts et sont servi
 
 ## Photos
 
-**Aucune photo n'est utilisée pour l'instant.** Le client fournit les images (générées par ses soins). Les trois emplacements sont dimensionnés dans la page ; pour chacun, la description de l'image idéale et le prompt proposé figurent ci-dessous.
+Trois images fournies par le client le 23/11/2026, **générées par IA par ses soins**. Elles ne proviennent d'aucune banque d'images. Elles ont été ré-encodées en WebP (taille d'origine + version 704 px de large) sans autre retouche.
 
-À la livraison de chaque image, compléter la ligne : fichier, outil utilisé, date, conditions d'utilisation de l'outil (droits d'usage commercial), et vérifier l'absence de personne identifiable, de marque et de texte lisible.
-
-| Emplacement | Fichier attendu | Format | Image idéale | Source / auteur / licence |
+| Emplacement | Fichiers | Taille d'origine | Contenu | Source / auteur / licence |
 |---|---|---|---|---|
-| Section « La praticienne » | `assets/img/bassin.webp` | 1200 × 1500 (4:5) | Surface d'eau calme d'une piscine vide vue du dessus, une ligne d'eau en diagonale, reflets de lumière sur le carrelage, tons bleus froids. Aucune personne. | *à compléter* |
-| Section « Déroulé d'une séance » | `assets/img/salle.webp` | 1600 × 1200 (4:3) | Salle de soin vide, table recouverte d'un drap blanc, murs gris très clair, lumière du jour latérale, un tabouret. Pas de plante, de bougie, de galet. | *à compléter* |
-| Section « Le cabinet » | `assets/img/entree.webp` | 1200 × 1500 (4:5) | Entrée de plain-pied d'un petit cabinet dans un immeuble nantais en tuffeau, porte vitrée sans marche, plaque vierge, lumière du matin. Aucune enseigne ni texte lisible. | *à compléter* |
+| Section « La praticienne » | `assets/img/bassin.webp`, `bassin-704.webp` | 1122 × 1402 (4:5) | Eau calme d'une piscine vide, ligne d'eau bleue et blanche en diagonale. Aucune personne, aucune marque. | Fournie par le client, image générée par IA. **Outil et conditions d'utilisation à compléter par le client.** |
+| Section « Déroulé d'une séance » | `assets/img/salle.webp`, `salle-704.webp` | 1448 × 1086 (4:3) | Salle de soin vide, table recouverte d'un drap blanc, tabouret en bois, lumière du jour. Aucune personne, aucune marque. | Fournie par le client, image générée par IA. **Outil et conditions d'utilisation à compléter par le client.** |
+| Section « Le cabinet » | `assets/img/entree.webp`, `entree-704.webp` | 1122 × 1402 (4:5) | Entrée de plain-pied dans un immeuble en pierre claire, porte vitrée. Une plaque porte le nom du cabinet fictif « Cabinet Camille Roux, Ostéopathe ». Deux plantes en pot. Aucune personne, aucune marque réelle. | Fournie par le client, image générée par IA. **Outil et conditions d'utilisation à compléter par le client.** |
 
-### Prompts proposés
+À compléter pour chaque image : nom de l'outil, date de génération, et clause des conditions d'utilisation de l'outil autorisant l'usage commercial.
 
-Contraintes communes (à ajouter en négatif si l'outil le permet) : *people, hands, faces, logos, brand, readable text, watermark, candles, pebbles, stones, bamboo, leaves, plants, beige, pastel gradient*.
+### Prompts d'origine
+
+Contraintes communes (en négatif) : *people, hands, faces, logos, brand, readable text, watermark, candles, pebbles, stones, bamboo, leaves, plants, beige, pastel gradient*.
 
 1. **bassin** : *Top-down photograph of the still water surface of an empty indoor swimming pool, one lane rope crossing the frame diagonally, soft caustic light patterns on pale tiles below, calm cool blue tones from deep prussian blue to soft pool blue, no people, minimal composition with generous negative space, editorial photography, natural light, 35mm, fine film grain, portrait 4:5.*
 2. **salle** : *Minimal, empty osteopathy treatment room, a simple treatment table covered with plain white linen, very light cool grey walls, soft daylight from a side window casting gentle shadows, a single wooden stool, nothing else in the room, calm cool palette with a hint of muted blue, architectural interior photography, eye level, 35mm, natural light, landscape 4:3.*
